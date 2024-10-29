@@ -1,0 +1,32 @@
+{
+  "name": "thesecondshoppe",
+  "version": "1.0.0",
+  "description": "Me playing with react",
+  "main": "App.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/susan1130/TheReactGulabo.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "susan das",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/susan1130/TheReactGulabo/issues"
+  },
+  "homepage": "https://github.com/susan1130/TheReactGulabo#readme",
+  "dependencies": {
+    "parcel": "^2.12.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
