@@ -23,7 +23,7 @@
   "homepage": "https://github.com/susan1130/TheReactGulabo#readme",
   "dependencies": {
     "parcel": "^2.12.0",
-    "react": "^18.3.0",
+    "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
