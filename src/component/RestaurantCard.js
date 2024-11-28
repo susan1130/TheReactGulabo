@@ -10,7 +10,7 @@ const RestaurantCard = (props) => {
             <h3>{resData.info.name}</h3>
 
             <ul className="res-rate-list">
-                <li>{resData.info.avgRating} stars</li>
+                <li>{resData.info.avgRatingString}</li>
                 <li>{resData.info.cuisines.join(", ")}</li>
                 <li>{resData.info.costForTwo}</li>
                 <li>{resData.info.sla.deliveryTime} minutes</li>
