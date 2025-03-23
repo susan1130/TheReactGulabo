@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withSomeLabel} from "./RestaurantCard";
 import { RES_LIST } from "../utils/constants";
 import { useState,useEffect } from "react";
 import Shimmer from "./Shimmer";
@@ -12,6 +12,8 @@ const [cleanedResList, setCleanedResList] = useState([]);
 const [searchText, setSearchText] = useState ("");
 const [searchResList, setSearchResList] = useState([]);
 // const [flag,setFlag] = useState(false);
+
+const RestaurantCardWithSomeLabel = withSomeLabel(RestaurantCard);                                      
 
 useEffect(() =>{
         fetchData();
@@ -36,13 +38,13 @@ useEffect(() =>{
     return cleanedResList.length === 0 ? (
         <Shimmer/>
     ): (
-        <div className="body">
-            <div className="search-bar-container">
-                <p className="search-para">Food on your mind? Search here. </p>
-                <input type="text" className="search" value={searchText} onChange={ (e) => {
+        <div className="body m-2 p-2 shadow-sm">
+            <div className="search-bar-container flex m-2 p-2 shadow-sm">
+                <p className="search-para px-2 ">Food on your mind? Search here. </p>
+                <input type="text" className="search border border-solid border-violet-400 px-4 rounded-md hover:shadow-lg shadow-md focus:outline-none focus:ring focus:ring-violet-200" value=    {searchText} onChange={ (e) => {
                             setSearchText(e.target.value);
                         }}/>
-                <button className="submit-search" onClick={
+                <button className="submit-search px-2 mx-4 bg-sky-50 shadow-md rounded-md hover:shadow-lg" onClick={
                     () =>{
                         console.log(searchText);
                         console.log(searchResList);
@@ -55,8 +57,8 @@ useEffect(() =>{
                     }
                 }>SEARCH</button>
                 
-                <div className="filter">
-                    <button className="filter-top-res" onClick={() =>{
+                <div className="filter px-4"> 
+                    <button className="filter-top-res px-4 bg-sky-50 shadow-md rounded-md hover:shadow-lg" onClick={() =>{
                         const fList = cleanedResList.filter(
                             (res) => res.info.avgRating>4.1
                         );
@@ -65,11 +67,16 @@ useEffect(() =>{
                     }}>Top Restaurants</button>
                 </div>
             </div>
-            <div className="res-container">
+            <div className="res-container flex flex-wrap ">
                 {
                     searchResList.map((r)=>(
                        <Link key={r.info.id} to={"/restaurants/"+ r.info.id}> 
-                            <RestaurantCard resData = {r}/> 
+                           {
+                             r.info.isOpen ? 
+                             (<RestaurantCardWithSomeLabel resData = {r}/>): 
+                             (<RestaurantCard resData = {r}/>)
+                           }
+                             
                        </Link>
                     ))
                 }

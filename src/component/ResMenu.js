@@ -2,6 +2,8 @@
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import useRestMenueHk from "../utils/useRestMenueHk";
+import MenuCatagory from "./MenuCatagory";
+import { useState } from "react";
 
 const ResMenu = () => {
 
@@ -13,39 +15,66 @@ const ResMenu = () => {
     const { name, avgRatingString, costForTwoMessage, cuisines,  locality, sla} = resInfo?.cards[2]?.card?.card?.info;
     const {itemCards} = resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
+    //console.log(resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
+
+    const category = resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter( c => c.card?.card?.
+        ["@type"] == "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory" 
+        );
+        const showList = false;
+        const [showIndex, setShowIndex] = useState(0);
+
     return (
-        <div className="indiv-restaurant">
-            <h1 className="r-name">{name}</h1>
-            <div className="rest-container"> 
-                <div className="r-detail">
-                    <p>{avgRatingString} stars</p>
-                    <p className="dummy"></p>
-                    <p>* {costForTwoMessage}</p>
+        <div className="indiv-restaurant mx-24 px-24">
+            <div className="m-10 py-1 shadow-inner rounded-3xl">
+                <h1 className="r-name text-4xl mx-5 p-1 text-violet-700 font-bold">{name}</h1>
+                <div className="rest-container p-5 m-5 my-0.5 text-lg rounded-3xl border border-slate-200 shadow-2xl"> 
+                    <div className="r-detail  text-violet-600 text-sm">
+                        <p>{avgRatingString} stars</p>
+                        <p className="dummy"></p>
+                        <p>* {costForTwoMessage}</p>
+                    </div>
+                        <p className="r-type text-violet-600 text-sm">{cuisines.join(", ")}</p>
+                    
+                    <div className="res-loc text-violet-600 text-xs">
+                        <p>Outlet : {locality} </p>
+                        <p> {sla?.slaString}</p>
+                    </div>
                 </div>
-                    <p className="r-type">{cuisines.join(", ")}</p>
-                
-                <div className="res-loc">
-                    <p>Outlet : {locality} </p>
-                    <p> {sla?.slaString}</p>
-                </div>
+                <div className="m-1 p-1"></div>
             </div>
             
             <div className="res-menu">
-                <p className="menu-font">MENU</p>
-                <ul className="menue-list">
-                    {itemCards.map( i => 
-                        <li className="menue-list-item" key={i.card?.info?.id}>
-                            <p>{i?.card?.info?.name}</p>
-                            <p>Rs. {i?.card?.info?.defaultPrice /100  || i?.card?.info?.price /100}</p>
-                            <p>{i?.card?.info?.description ||i?.card?.info?.category}</p>
-                            <hr/>
-                        </li>)}
-
-                </ul>
+                {/*category accordian*/}
+                {category.map((category, index) => (
+                    <MenuCatagory 
+                        key={category?.card?.card?.title} 
+                        data={category?.card?.card}
+                        // showList={index===1 && true} this or the line below are similar
+                        showList={index=== showIndex ? true: false}
+                        setShowIndex={() => setShowIndex(index)}
+                    />
+                ))}
             </div>
+               
         </div>
     );
 
 };
 
 export default ResMenu;
+
+
+{/* <p className="menu-font">MENU</p>
+                <br/>
+                <ul className="menue-list">
+                    {itemCards.map( i => 
+                        <li className="menue-list-item" key={i.card?.info?.id}>
+                            <p>{i?.card?.info?.name}</p>
+                            <p>Rs. {i?.card?.info?.defaultPrice /100  || i?.card?.info?.price /100}</p>
+                            <p>{i?.card?.info?.description ||i?.card?.info?.category}</p>
+                            <br/><hr/><br/>
+                        </li>)}
+
+                </ul>
+            </div> */
+}
