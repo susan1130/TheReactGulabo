@@ -17,8 +17,8 @@ const AccordianList = ({items}) =>{
                                 <div className="relative">
                                     {i.card.info.imageId ? 
                                         <img src={RES_IMG_URL+i.card.info.imageId} alt="Image here" className="w-full "/>
-                                        :<div className="w-14 h-10"></div>}
-                                    <button className="absolute bottom-0 right-1/3 p-1 bg-indigo-100 border-solid border-indigo-300 rounded-xl">ADD+</button>
+                                        :<div className="w-14 h-10 m-2 p-2"></div>}
+                                    <button className="absolute bottom-0 right-1/3 p-1 bg-indigo-100 border-solid border-indigo-300 rounded-xl m-1 font-medium">ADD+</button>
                                 </div>
                             </div>
                     </div>))}

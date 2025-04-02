@@ -26,7 +26,7 @@ useEffect(() =>{
         console.log(jSon);
         setCleanedResList(jSon?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setSearchResList(jSon?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        // console.log(cleanedResList);
+         //console.log(cleanedResList);
     };
 
     // if(cleanedResList.length === 0){

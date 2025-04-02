@@ -10,18 +10,19 @@ const ResMenu = () => {
     const {resId} = useParams();
     const resInfo = useRestMenueHk(resId);
 
+    const [showIndex, setShowIndex] = useState(0);
+    //const [flag, setFlag] = useState(false);      accordian flag
+
     if (resInfo === null) return <Shimmer/> ;
         
     const { name, avgRatingString, costForTwoMessage, cuisines,  locality, sla} = resInfo?.cards[2]?.card?.card?.info;
-    const {itemCards} = resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
+    //const {itemCards} = resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
     //console.log(resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
 
     const category = resInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter( c => c.card?.card?.
         ["@type"] == "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory" 
         );
-        const showList = false;
-        const [showIndex, setShowIndex] = useState(0);
 
     return (
         <div className="indiv-restaurant mx-24 px-24">
@@ -45,17 +46,17 @@ const ResMenu = () => {
             
             <div className="res-menu">
                 {/*category accordian*/}
-                {category.map((category, index) => (
+                {category.map((c, index) => (
                     <MenuCatagory 
-                        key={category?.card?.card?.title} 
-                        data={category?.card?.card}
+                        key = {c?.card?.card?.title} 
+                        data = {c?.card?.card}
                         // showList={index===1 && true} this or the line below are similar
-                        showList={index=== showIndex ? true: false}
-                        setShowIndex={() => setShowIndex(index)}
+                        showList = {index === showIndex  ? true: false} 
+                        setShowIndex = {() => setShowIndex(index)}
+                        //setFlag = { () => setFlag(true)}
                     />
                 ))}
-            </div>
-               
+            </div>   
         </div>
     );
 
@@ -63,18 +64,4 @@ const ResMenu = () => {
 
 export default ResMenu;
 
-
-{/* <p className="menu-font">MENU</p>
-                <br/>
-                <ul className="menue-list">
-                    {itemCards.map( i => 
-                        <li className="menue-list-item" key={i.card?.info?.id}>
-                            <p>{i?.card?.info?.name}</p>
-                            <p>Rs. {i?.card?.info?.defaultPrice /100  || i?.card?.info?.price /100}</p>
-                            <p>{i?.card?.info?.description ||i?.card?.info?.category}</p>
-                            <br/><hr/><br/>
-                        </li>)}
-
-                </ul>
-            </div> */
-}
+//  showList = {(index === showIndex && flag === true)  ? true: false}     for the problem of opening and closing the accordian

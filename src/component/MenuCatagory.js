@@ -1,10 +1,14 @@
-import { useState } from "react";
+
+//import { useState } from "react";
 import AccordianList from "./AccordianList";
 
-const MenuCatagory = ({data, showList, setShowIndex}) =>{
+const MenuCatagory = ({data, showList, setShowIndex, setFlag}) =>{
+
+    //const [flag, setFlag] = useState(null);
+
     const accordianFold = () =>{
-        //setShowList(!showList);
         setShowIndex();
+        //setFlag();
     };
     return(
         <div className="w-10/12 mx-auto my-6 shadow-md bg-gray-50 rounded-md">  
