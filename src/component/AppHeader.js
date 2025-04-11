@@ -3,25 +3,25 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CART_LOGO } from "../utils/constants";
 import useNetworkStat from "../utils/useNetworkStat";
-
-// const styleCardCart = {
-//     height:"50px",
-//     width:"50px",
-//     margin:"5px",
-//     padding:"5px"
-// };  style={styleCardCart} ... in the <img> tag
+import { useContext } from "react";
+import UserContext from "./UserContext";
+import { useSelector } from "react-redux";
 
 const AppHeader = () => {
 
     const [rBtnName, SetRBtnName] = useState("Login");
     const netStat = useNetworkStat();
 
+    const {loggedInUser} = useContext(UserContext);
+
+    const cartItems = useSelector((store)=> store.cart.items);
+
     return(
-        <div className="flex justify-between bg-sky-50 shadow-md m-2 px-2">
-            <div>
+        <div className="flex justify-between bg-indigo-50 shadow-md m-2 px-2">
+            <div className="m-1 p-1">
                 <img alt="Logo here" className="logo w-28 p-1" src={LOGO_URL}/>
             </div>
-            <div>
+            <div className="p-2 m-2">
                 <ul className="flex items-center py-10">
                     <li className="px-4"><Link to="/">HOME</Link></li>
                     <li className="px-4"><Link to="/about">ABOUT US</Link></li>
@@ -35,11 +35,13 @@ const AppHeader = () => {
                             }
                         }>{rBtnName}</button>
                     </li>
+                    <li className="px-1">{loggedInUser}</li>
                     <li className="net-stat px-4">Network Status: {netStat ? <p className="inline">&#9989;</p> :<p className="inline">&#x2B55;</p>}</li>
                 </ul>
             </div>
-            <div className="nav-cart-container">
-                <img alt="cart here" className="nav-cart w-20 py-6" src={CART_LOGO} /> 
+            <div className="nav-cart-container w-1/12 mt-2 mx-8 p-2">
+                <Link to="/cart"><img alt="cart here" className="nav-cart" src={CART_LOGO} /></Link>
+                <div className="px-4 text-sm"><Link to="/cart">({cartItems.length}) items</Link></div> 
             </div>
         </div>
     );

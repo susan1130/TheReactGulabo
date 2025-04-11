@@ -1,9 +1,10 @@
 import RestaurantCard, {withSomeLabel} from "./RestaurantCard";
 import { RES_LIST } from "../utils/constants";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useNetworkStat from "../utils/useNetworkStat";
+import UserContext from "./UserContext";
 
 const AppBody = () =>{
     
@@ -34,6 +35,9 @@ useEffect(() =>{
     // }
     const onlineStat = useNetworkStat();
     if (onlineStat === false) return <h1>You are offline!!</h1>;
+
+    const {loggedInUser, setUInfo} = useContext(UserContext);
+    //console.log(loggedInUser + " "+setUInfo);
 
     return cleanedResList.length === 0 ? (
         <Shimmer/>
@@ -66,13 +70,21 @@ useEffect(() =>{
                         setFlag(true);
                     }}>Top Restaurants</button>
                 </div>
+
+                <div className="px-4 flex items-center">
+                    <label>UserName : </label>
+                    <input className="border border-black px-4 mx-2" 
+                        onChange={ (e) => setUInfo(e.target.value)}
+                        value={loggedInUser}
+                        />
+                </div>
             </div>
             <div className="res-container flex flex-wrap ">
                 {
                     searchResList.map((r)=>(
                        <Link key={r.info.id} to={"/restaurants/"+ r.info.id}> 
                            {
-                             r.info.isOpen ? 
+                             r.info.veg ? 
                              (<RestaurantCardWithSomeLabel resData = {r}/>): 
                              (<RestaurantCard resData = {r}/>)
                            }

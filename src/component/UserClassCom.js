@@ -1,4 +1,5 @@
 import React from "react";
+import UserContext from "./UserContext";
 
 class UserClassCom extends React.Component {
 
@@ -21,6 +22,14 @@ class UserClassCom extends React.Component {
         });
       
     }
+
+    componentDidUpdate(){
+       // console.log("componentDidUpdate called");
+    }
+
+    componentWillUnmount(){
+        //console.log("componentWillUnmount called");
+    }
     
     render(){
         const {location} = this.props;
@@ -40,7 +49,16 @@ class UserClassCom extends React.Component {
                 className="p-2 m-2 bg-slate-50 rounded-lg"
                 >Count 1 : {this.state.cCount1}</button>
                 <button className="p-2 m-2 bg-slate-50 rounded-lg">Count 2 : {this.state.cCount2}</button>
-                <div className="p-2 m-2 bg-emerald-100 rounded-lg flex">
+                <div className="p-2 m-2 bg-emerald-100 rounded-lg">
+                    <div >
+                        <h2>About Class Components</h2>
+                        <div>
+                            LoggedInUser : look into the console.
+                            <UserContext.Consumer>
+                                {(data) => console.log(data)}
+                            </UserContext.Consumer>
+                        </div>
+                    </div>
                     <div className="w-6/12 p-4">
                         <h3>Name : {this.state.userInfo?.name}</h3>
                         <h4>GitHub Handle : {this.state.userInfo?.login} </h4>

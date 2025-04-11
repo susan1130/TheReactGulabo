@@ -10,8 +10,7 @@ const ResMenu = () => {
     const {resId} = useParams();
     const resInfo = useRestMenueHk(resId);
 
-    const [showIndex, setShowIndex] = useState(0);
-    //const [flag, setFlag] = useState(false);      accordian flag
+    const [showIndex, setShowIndex] = useState(0);    
 
     if (resInfo === null) return <Shimmer/> ;
         
@@ -51,9 +50,9 @@ const ResMenu = () => {
                         key = {c?.card?.card?.title} 
                         data = {c?.card?.card}
                         // showList={index===1 && true} this or the line below are similar
-                        showList = {index === showIndex  ? true: false} 
+                        showList = {index === showIndex  ? true: false}   // showIndex is that which you have 
+                                                            //clicked showList is true or false to show or not  
                         setShowIndex = {() => setShowIndex(index)}
-                        //setFlag = { () => setFlag(true)}
                     />
                 ))}
             </div>   

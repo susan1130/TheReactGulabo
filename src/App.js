@@ -1,6 +1,6 @@
 //document.getElementById("head1").innerHTML = "I changed the original contents here.";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import AppHeader from "./component/AppHeader";
 import AppBody from "./component/AppBody";
@@ -10,19 +10,40 @@ import Error from "./component/Error";
 import Contact from "./component/Contact";
 import ResMenu from "./component/ResMenu";
 //import Grocery from "./component/Grocery";
+//import { useContext } from "react";
+import UserContext from "./component/UserContext";
+
+import {Provider} from "react-redux";
+import appStore from "./utils/appStore";
 
 import { lazy, Suspense } from "react";
 import Shimmer from "./component/Shimmer";
+import Cart from "./component/Cart";
 
 const Grocery = lazy( () => import("./component/Grocery"));
 const About = lazy( () => import("./component/About"));
 
 const AppLayout = () =>{
+    const [uInfo, setUInfo] = useState();
+
+    //authentication here
+    useEffect( ()=>{
+        //API call here and get username and password
+        const data = {
+            name: "Udayan Das",
+        };
+        setUInfo(data.name);
+    },[]);
+
     return(
-        <div className="app">
-            <AppHeader/>
-            <Outlet/>
-        </div>
+        <Provider store={appStore}>
+            <UserContext.Provider value={{loggedInUser:uInfo, setUInfo}}>
+                <div className="app">
+                    <AppHeader/>
+                    <Outlet/>
+                </div>
+            </UserContext.Provider>
+        </Provider>
     );
 };
 
@@ -54,6 +75,10 @@ const appRoute = createBrowserRouter([
             {
                 path:"/restaurants/:resId",
                 element:<ResMenu/>
+            },
+            {
+                path:"/cart",
+                element:<Cart/>
             }
         ],
         errorElement:<Error/>

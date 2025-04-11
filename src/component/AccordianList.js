@@ -1,6 +1,14 @@
 import { RES_IMG_URL } from "../utils/constants";
+import {useDispatch} from "react-redux"
+import { addItem } from "../utils/cartSlice";
 
 const AccordianList = ({items}) =>{
+    
+    const dispatchVar = useDispatch();
+    const handleAddItem = (ii) =>{
+        dispatchVar(addItem(ii));
+    };
+
     return(
         <div>
            <div className="p-2 m-2">
@@ -18,7 +26,9 @@ const AccordianList = ({items}) =>{
                                     {i.card.info.imageId ? 
                                         <img src={RES_IMG_URL+i.card.info.imageId} alt="Image here" className="w-full "/>
                                         :<div className="w-14 h-10 m-2 p-2"></div>}
-                                    <button className="absolute bottom-0 right-1/3 p-1 bg-indigo-100 border-solid border-indigo-300 rounded-xl m-1 font-medium">ADD+</button>
+                                    <button className="absolute bottom-0 right-1/3 p-1 bg-indigo-100 border-solid border-indigo-300 rounded-xl m-1 font-medium"
+                                        onClick={() => handleAddItem(i)}    
+                                    >ADD+</button>
                                 </div>
                             </div>
                     </div>))}
